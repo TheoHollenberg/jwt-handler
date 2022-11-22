@@ -1,2 +1,2 @@
-import { Num } from './Num';
-export { Num };
+import { JWT } from './JWT';
+export { JWT };

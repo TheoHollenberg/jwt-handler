@@ -47,7 +47,10 @@
   "bugs": {
     "url": "https://github.com/TheoHollenberg/jwt-handler/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "js-base64": "^3.7.2",
+    "jssha": "^3.3.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
