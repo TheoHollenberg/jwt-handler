@@ -36,14 +36,20 @@ class JWT {
         const hasSecret = !!secret;
         if (isHmac && isSha && !hasSecret)
             throw new Error('Hmac signage needs a valid secret');
-        const baseJwt = `${js_base64_1.Base64.encode(JSON.stringify(this.header))}.${js_base64_1.Base64.encode(JSON.stringify(this.payload))}`;
+        const baseJwt = `${js_base64_1.Base64.encode(JSON.stringify(this.header), true)}.${js_base64_1.Base64.encode(JSON.stringify(this.payload), true)}`;
         // eslint-disable-next-line new-cap
         const shaObj = new jssha_1.default('SHA-256', 'TEXT', {
             hmacKey: { value: secret, format: 'TEXT' },
         });
         shaObj.update(baseJwt);
         this.signage = js_base64_1.Base64.encode(shaObj.getHash('HEX'), true);
-        this._serialized = `${this.header}.${this.payload}.${this.signage}`;
+        this._serialized = `${baseJwt}.${this.signage}`;
+    }
+    set expiresIn(_expiresIn) {
+        this.payload['exp'] = Date.now() + 1000 * _expiresIn;
+    }
+    get isExpired() {
+        return (this.payload['exp'] || 0) < Date.now() ? true : false;
     }
     get serialized() {
         return this._serialized;
