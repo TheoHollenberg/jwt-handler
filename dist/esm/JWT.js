@@ -36,7 +36,7 @@ export class JWT {
             hmacKey: { value: secret, format: 'TEXT' },
         });
         shaObj.update(baseJwt);
-        this.signage = Base64.encode(shaObj.getHash('HEX'), true);
+        this.signage = shaObj.getHash('HEX');
         this._serialized = `${baseJwt}.${this.signage}`;
     }
     set expiresIn(_expiresIn) {

@@ -49,7 +49,7 @@ export class JWT {
     })
     shaObj.update(baseJwt)
 
-    this.signage = Base64.encode(shaObj.getHash('HEX'), true)
+    this.signage = shaObj.getHash('HEX')
 
     this._serialized = `${baseJwt}.${this.signage}`
   }
