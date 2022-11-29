@@ -44,13 +44,10 @@ export class JWT {
     )}.${Base64.encode(JSON.stringify(this.payload), true)}`
 
     // eslint-disable-next-line new-cap
-    const shaObj = new jsSHA('SHA-256', 'TEXT', {
-      hmacKey: { value: secret, format: 'TEXT' },
-    })
+    const shaObj = new jsSHA('SHA-256', 'TEXT')
+    shaObj.setHMACKey(secret, 'TEXT')
     shaObj.update(baseJwt)
-
-    this.signage = shaObj.getHash('HEX')
-
+    this.signage = shaObj.getHash('B64', { b64Pad: ' ' }).trimEnd()
     this._serialized = `${baseJwt}.${this.signage}`
   }
 
